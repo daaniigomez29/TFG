@@ -31,8 +31,8 @@ public class AuthService {
 
     public AuthResponse login(LoginRequest request){
         System.out.println(request.getPassword());
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        UserDetails user = userRepository.findByUsername(request.getUsername()).orElseThrow();
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+        UserDetails user = userRepository.findByEmail(request.getEmail()).orElseThrow();
         String token = jwtService.getToken(user);
         System.out.println("token: " + token);
         return AuthResponse.builder()
@@ -42,6 +42,7 @@ public class AuthService {
 
     public UserDTO register(RegisterRequest request){
         User user = User.builder()
+                .email(request.getEmail())
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .name(request.getName())

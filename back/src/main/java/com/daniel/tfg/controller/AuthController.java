@@ -7,10 +7,7 @@ import com.daniel.tfg.entity.dto.UserDTO;
 import com.daniel.tfg.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -26,5 +23,10 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<UserDTO> register(@RequestBody RegisterRequest request){
         return ResponseEntity.ok(authService.register(request));
+    }
+
+    @GetMapping("/prueba")
+    public String prueba(){
+        return "Accedido con token";
     }
 }

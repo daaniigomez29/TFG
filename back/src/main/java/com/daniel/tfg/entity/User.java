@@ -17,12 +17,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user_tfg", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
+@Table(name = "user_tfg", uniqueConstraints = {@UniqueConstraint(columnNames = {"username", "email"})})
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue
     Integer id;
+    String email;
     @Column(nullable = false)
     String username;
     String password;
