@@ -1,6 +1,5 @@
-package com.daniel.tfg.entity.auth;
+package com.daniel.tfg.model.dto;
 
-import com.daniel.tfg.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,9 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest {
-    String email;
-    String username;
-    String password;
-    String name;
-    Role role;
+    private String email;
+    private String username;
+    private String password;
+    private String name;
+    private boolean admin;
 }

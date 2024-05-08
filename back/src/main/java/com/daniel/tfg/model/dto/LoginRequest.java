@@ -1,4 +1,4 @@
-package com.daniel.tfg.entity.auth;
+package com.daniel.tfg.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthResponse {
-    String token;
+public class LoginRequest {
+    String email;
+    String password;
 }

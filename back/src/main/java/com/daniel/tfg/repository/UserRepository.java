@@ -1,6 +1,6 @@
 package com.daniel.tfg.repository;
 
-import com.daniel.tfg.entity.User;
+import com.daniel.tfg.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

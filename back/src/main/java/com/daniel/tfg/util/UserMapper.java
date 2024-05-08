@@ -1,8 +1,8 @@
 package com.daniel.tfg.util;
 
 
-import com.daniel.tfg.entity.dto.UserDTO;
-import com.daniel.tfg.entity.User;
+import com.daniel.tfg.model.User;
+import com.daniel.tfg.model.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

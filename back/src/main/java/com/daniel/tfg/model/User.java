@@ -1,39 +1,38 @@
-package com.daniel.tfg.entity;
+package com.daniel.tfg.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user_tfg", uniqueConstraints = {@UniqueConstraint(columnNames = {"username", "email"})})
+@Table(name = "User", uniqueConstraints = {@UniqueConstraint(columnNames = {"username", "email"})})
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue
-    Integer id;
-    String email;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Email(message = "El email debe ser válido")
+    private String email;
     @Column(nullable = false)
-    String username;
-    String password;
-    String name;
-    @Enumerated(EnumType.STRING)
-    Role role;
+    private String username;
+    private String password;
+    private String name;
+    private boolean admin;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return null;
     }
 
     @Override
@@ -43,7 +42,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.email;
     }
 
     @Override

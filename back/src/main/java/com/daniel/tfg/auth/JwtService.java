@@ -1,4 +1,4 @@
-package com.daniel.tfg.service.jwt;
+package com.daniel.tfg.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
