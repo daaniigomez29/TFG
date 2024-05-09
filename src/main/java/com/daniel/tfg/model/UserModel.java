@@ -33,6 +33,22 @@ public class UserModel implements UserDetails {
     private boolean admin;
 
 
+    /** Relaciones tabla solicitudes amistad */
+    @OneToMany(mappedBy = "userRequest", cascade = CascadeType.ALL)
+    List<RequestFriendModel> requestFriendModelList;
+
+    @OneToMany(mappedBy = "userReceive", cascade = CascadeType.ALL)
+    List<RequestFriendModel> ReceiveFriendModelList;
+
+
+    /** Relaciones tabla Friends */
+    @OneToMany(mappedBy = "user1", cascade = CascadeType.ALL)
+    List<FriendsModel> userFriendsModelList;
+
+    @OneToMany(mappedBy = "user2", cascade = CascadeType.ALL)
+    List<FriendsModel> friendsModelList;
+
+    /** Relaciones tabla Libros Favoritos */
     @OneToMany(mappedBy = "userModel", cascade = CascadeType.ALL)
     List<FavoriteBooksModel> favoriteBooksModelsList;
 
