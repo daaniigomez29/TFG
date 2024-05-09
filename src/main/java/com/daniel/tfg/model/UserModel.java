@@ -10,14 +10,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "User", uniqueConstraints = {@UniqueConstraint(columnNames = {"username", "email"})})
-public class User implements UserDetails {
+@Table(name = "user_books", uniqueConstraints = {@UniqueConstraint(columnNames = {"username", "email"})})
+public class UserModel implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +29,12 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String name;
+    private String image;
     private boolean admin;
+
+
+    @OneToMany(mappedBy = "userModel", cascade = CascadeType.ALL)
+    List<FavoriteBooksModel> favoriteBooksModelsList;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -4,7 +4,7 @@ package com.daniel.tfg.service.impl;
 import com.daniel.tfg.auth.JwtService;
 import com.daniel.tfg.model.dto.LoginRequest;
 import com.daniel.tfg.model.dto.RegisterRequest;
-import com.daniel.tfg.model.User;
+import com.daniel.tfg.model.UserModel;
 import com.daniel.tfg.model.dto.UserDTO;
 import com.daniel.tfg.repository.UserRepository;
 import com.daniel.tfg.service.AuthService;
@@ -31,14 +31,14 @@ public class AuthServiceImpl implements AuthService {
     public UserDTO login(LoginRequest request){
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         UserDetails user = userRepository.findByEmail(request.getEmail()).orElseThrow();
-        User user2 = userRepository.findByEmail(request.getEmail()).orElseThrow();
+        UserModel user2 = userRepository.findByEmail(request.getEmail()).orElseThrow();
         String token = jwtService.getToken(user);
         UserDTO userDTO = new UserDTO(user2.getId(), user2.getEmail(), user2.getUsername(), user2.getName(), user2.isAdmin(), token);
         return userDTO;
     }
 
     public UserDTO register(RegisterRequest request){
-        User user = User.builder()
+        UserModel user = UserModel.builder()
                 .email(request.getEmail())
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
