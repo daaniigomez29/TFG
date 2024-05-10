@@ -4,7 +4,7 @@ import com.daniel.tfg.auth.AuthResponse;
 import com.daniel.tfg.controller.AuthController;
 import com.daniel.tfg.model.dto.LoginRequest;
 import com.daniel.tfg.model.dto.RegisterRequest;
-import com.daniel.tfg.model.dto.UserDTO;
+import com.daniel.tfg.model.dto.UserModelDto;
 import com.daniel.tfg.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class AuthControllerImpl implements AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserDTO> register(@RequestBody RegisterRequest request){
+    public ResponseEntity<UserModelDto> register(@RequestBody RegisterRequest request){
         return ResponseEntity.ok(authService.register(request));
     }
 }

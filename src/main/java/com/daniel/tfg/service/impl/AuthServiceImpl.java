@@ -6,7 +6,7 @@ import com.daniel.tfg.auth.JwtService;
 import com.daniel.tfg.model.dto.LoginRequest;
 import com.daniel.tfg.model.dto.RegisterRequest;
 import com.daniel.tfg.model.UserModel;
-import com.daniel.tfg.model.dto.UserDTO;
+import com.daniel.tfg.model.dto.UserModelDto;
 import com.daniel.tfg.repository.UserRepository;
 import com.daniel.tfg.service.AuthService;
 import com.daniel.tfg.util.Mapper;
@@ -47,7 +47,7 @@ public class AuthServiceImpl implements AuthService {
                 .build();
     }
 
-    public UserDTO register(RegisterRequest request){
+    public UserModelDto register(RegisterRequest request){
         UserModel user = UserModel.builder()
                 .email(request.getEmail())
                 .nameuser(request.getNameuser())
