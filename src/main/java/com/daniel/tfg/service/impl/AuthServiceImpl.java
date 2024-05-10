@@ -33,7 +33,7 @@ public class AuthServiceImpl implements AuthService {
         UserDetails user = userRepository.findByEmail(request.getEmail()).orElseThrow();
         UserModel user2 = userRepository.findByEmail(request.getEmail()).orElseThrow();
         String token = jwtService.getToken(user);
-        UserDTO userDTO = new UserDTO(user2.getId(), user2.getEmail(), user2.getUsername(), user2.getName(), user2.isAdmin(), token);
+        UserDTO userDTO = new UserDTO(user2.getId(), user2.getEmail(), user2.getUsername(), user2.getName(), user2.getImage(), user2.isAdmin(), token);
         return userDTO;
     }
 
@@ -43,6 +43,7 @@ public class AuthServiceImpl implements AuthService {
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .name(request.getName())
+                .image(request.getImage())
                 .admin(request.isAdmin())
                 .build();
 

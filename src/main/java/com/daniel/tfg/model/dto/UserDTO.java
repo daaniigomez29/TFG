@@ -12,6 +12,7 @@ public class UserDTO {
     private String email;
     private String username;
     private String name;
+    private String image;
     private boolean admin;
     private String token;
 }
