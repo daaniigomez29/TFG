@@ -26,7 +26,7 @@ public class UserModel implements UserDetails {
     @Email(message = "El email debe ser válido")
     private String email;
     @Column(nullable = false)
-    private String username;
+    private String nameuser;
     private String password;
     private String name;
     private String image;

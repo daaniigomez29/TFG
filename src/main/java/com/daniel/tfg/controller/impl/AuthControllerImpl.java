@@ -1,5 +1,6 @@
 package com.daniel.tfg.controller.impl;
 
+import com.daniel.tfg.auth.AuthResponse;
 import com.daniel.tfg.controller.AuthController;
 import com.daniel.tfg.model.dto.LoginRequest;
 import com.daniel.tfg.model.dto.RegisterRequest;
@@ -19,7 +20,7 @@ public class AuthControllerImpl implements AuthController {
 
     private final AuthService authService;
     @PostMapping("/login")
-    public ResponseEntity<UserDTO> login(@RequestBody LoginRequest request){
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request){
         return  ResponseEntity.ok(authService.login(request));
     }
 

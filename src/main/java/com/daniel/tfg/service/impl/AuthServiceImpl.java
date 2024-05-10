@@ -1,6 +1,7 @@
 package com.daniel.tfg.service.impl;
 
 
+import com.daniel.tfg.auth.AuthResponse;
 import com.daniel.tfg.auth.JwtService;
 import com.daniel.tfg.model.dto.LoginRequest;
 import com.daniel.tfg.model.dto.RegisterRequest;
@@ -8,13 +9,16 @@ import com.daniel.tfg.model.UserModel;
 import com.daniel.tfg.model.dto.UserDTO;
 import com.daniel.tfg.repository.UserRepository;
 import com.daniel.tfg.service.AuthService;
-import com.daniel.tfg.util.UserMapper;
+import com.daniel.tfg.util.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -26,21 +30,27 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    private final UserMapper userMapper;
+    private final Mapper modelMapper;
 
-    public UserDTO login(LoginRequest request){
+    public AuthResponse login(LoginRequest request){
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         UserDetails user = userRepository.findByEmail(request.getEmail()).orElseThrow();
         UserModel user2 = userRepository.findByEmail(request.getEmail()).orElseThrow();
-        String token = jwtService.getToken(user);
-        UserDTO userDTO = new UserDTO(user2.getId(), user2.getEmail(), user2.getUsername(), user2.getName(), user2.getImage(), user2.isAdmin(), token);
-        return userDTO;
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("nameuser", user2.getNameuser());
+        extraClaims.put("name", user2.getName());
+        extraClaims.put("image", user2.getImage());
+        extraClaims.put("admin", user2.isAdmin());
+        String token = jwtService.getTokenFromService(extraClaims, user);
+        return AuthResponse.builder()
+                .token(token)
+                .build();
     }
 
     public UserDTO register(RegisterRequest request){
         UserModel user = UserModel.builder()
                 .email(request.getEmail())
-                .username(request.getUsername())
+                .nameuser(request.getNameuser())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .name(request.getName())
                 .image(request.getImage())
@@ -49,6 +59,6 @@ public class AuthServiceImpl implements AuthService {
 
         userRepository.save(user);
 
-        return userMapper.toUserDTO(user);
+        return modelMapper.toUserDTO(user);
     }
 }
