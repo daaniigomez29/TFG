@@ -2,10 +2,11 @@ package com.daniel.tfg.service;
 
 import com.daniel.tfg.model.dto.UserModelDto;
 
+import java.util.List;
+
 public interface UserService {
-    public UserModelDto getAllUsers();
-    public UserModelDto getUserById();
-    public UserModelDto addUser(UserModelDto userModelDto);
+    public List<UserModelDto> getAllUsers();
+    public UserModelDto getUserById(Integer id);
     public UserModelDto editUser(UserModelDto userModelDto);
-    public UserModelDto deleteUserById(Integer id);
+    public boolean deleteUserById(Integer id);
 }

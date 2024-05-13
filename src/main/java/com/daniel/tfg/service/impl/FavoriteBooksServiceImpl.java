@@ -1,11 +1,23 @@
 package com.daniel.tfg.service.impl;
 
 import com.daniel.tfg.model.dto.FavoriteBooksModelDto;
+import com.daniel.tfg.repository.FavoriteBooksRepository;
 import com.daniel.tfg.service.FavoriteBooksService;
+import com.daniel.tfg.util.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class FavoriteBooksServiceImpl implements FavoriteBooksService {
+
+    @Autowired
+    private FavoriteBooksRepository favoriteBooksRepository;
+    @Autowired
+    private Mapper modelMapper;
     @Override
-    public FavoriteBooksModelDto getAllFavoriteBooks() {
+    public List<FavoriteBooksModelDto> getAllFavoriteBooks() {
         return null;
     }
 
@@ -25,7 +37,7 @@ public class FavoriteBooksServiceImpl implements FavoriteBooksService {
     }
 
     @Override
-    public FavoriteBooksModelDto deleteFavoriteBooksById(Integer id) {
-        return null;
+    public boolean deleteFavoriteBooksById(Integer id) {
+        return false;
     }
 }

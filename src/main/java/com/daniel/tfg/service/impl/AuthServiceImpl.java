@@ -3,6 +3,7 @@ package com.daniel.tfg.service.impl;
 
 import com.daniel.tfg.auth.AuthResponse;
 import com.daniel.tfg.auth.JwtService;
+import com.daniel.tfg.exception.EmailInvalidException;
 import com.daniel.tfg.model.dto.LoginRequest;
 import com.daniel.tfg.model.dto.RegisterRequest;
 import com.daniel.tfg.model.UserModel;
@@ -48,17 +49,24 @@ public class AuthServiceImpl implements AuthService {
     }
 
     public UserModelDto register(RegisterRequest request){
-        UserModel user = UserModel.builder()
-                .email(request.getEmail())
-                .nameuser(request.getNameuser())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .name(request.getName())
-                .image(request.getImage())
-                .admin(request.isAdmin())
-                .build();
+        boolean userExist;
 
-        userRepository.save(user);
+        userExist = userRepository.findByEmail(request.getEmail()).isPresent();
 
-        return modelMapper.toUserDTO(user);
+        if(userExist) {
+            UserModel user = UserModel.builder()
+                    .email(request.getEmail())
+                    .nameuser(request.getNameuser())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .name(request.getName())
+                    .image(request.getImage())
+                    .admin(request.isAdmin())
+                    .build();
+
+            userRepository.save(user);
+            return modelMapper.toUserDTO(user);
+        } else{
+            throw new EmailInvalidException();
+        }
     }
 }

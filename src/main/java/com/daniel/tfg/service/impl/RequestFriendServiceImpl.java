@@ -1,16 +1,29 @@
 package com.daniel.tfg.service.impl;
 
 import com.daniel.tfg.model.dto.RequestFriendModelDto;
+import com.daniel.tfg.repository.RequestFriendRepository;
+import com.daniel.tfg.repository.UserRepository;
 import com.daniel.tfg.service.RequestFriendService;
+import com.daniel.tfg.util.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class RequestFriendServiceImpl implements RequestFriendService {
+
+    @Autowired
+    private RequestFriendRepository requestFriendRepository;
+    @Autowired
+    private Mapper modelMapper;
     @Override
-    public RequestFriendModelDto getAllRequestFriends() {
+    public List<RequestFriendModelDto> getAllRequestFriends() {
         return null;
     }
 
     @Override
-    public RequestFriendModelDto getRequestFriendById() {
+    public RequestFriendModelDto getRequestFriendByUserId() {
         return null;
     }
 
@@ -25,7 +38,7 @@ public class RequestFriendServiceImpl implements RequestFriendService {
     }
 
     @Override
-    public RequestFriendModelDto deleteRequestFriendById(Integer id) {
-        return null;
+    public boolean deleteRequestFriendById(Integer id) {
+        return false;
     }
 }

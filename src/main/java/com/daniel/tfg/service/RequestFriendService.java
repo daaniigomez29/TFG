@@ -2,10 +2,12 @@ package com.daniel.tfg.service;
 
 import com.daniel.tfg.model.dto.RequestFriendModelDto;
 
+import java.util.List;
+
 public interface RequestFriendService {
-    public RequestFriendModelDto getAllRequestFriends();
-    public RequestFriendModelDto getRequestFriendById();
+    public List<RequestFriendModelDto> getAllRequestFriends();
+    public RequestFriendModelDto getRequestFriendByUserId();
     public RequestFriendModelDto addRequestFriend(RequestFriendModelDto requestFriendModelDto);
     public RequestFriendModelDto editRequestFriend(RequestFriendModelDto requestFriendModelDto);
-    public RequestFriendModelDto deleteRequestFriendById(Integer id);
+    public boolean deleteRequestFriendById(Integer id);
 }
