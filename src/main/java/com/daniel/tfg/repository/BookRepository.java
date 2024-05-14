@@ -12,7 +12,4 @@ import java.util.List;
 
 @Repository
 public interface BookRepository extends JpaRepository<BookModel, Integer> {
-
-    @Query("SELECT b FROM FavoriteBooksModel WHERE b.userModel = :user")
-    List<FavoriteBooksModelDto> obtainAllFavoriteBooks(@Param("user") UserModelDto userModelDto);
 }

@@ -1,6 +1,7 @@
 package com.daniel.tfg.repository;
 
 import com.daniel.tfg.model.RequestFriendModel;
+import com.daniel.tfg.model.UserModel;
 import com.daniel.tfg.model.dto.RequestFriendModelDto;
 import com.daniel.tfg.model.dto.UserModelDto;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,6 +14,6 @@ import java.util.List;
 @Repository
 public interface RequestFriendRepository extends JpaRepository<RequestFriendModel, Integer> {
 
-    @Query("SELECT rf FROM RequestFriendModel WHERE rf.userReceive = :user")
-    List<RequestFriendModelDto> findAllRequestsOfUser(@Param("user") UserModelDto userModelDto);
+    @Query("SELECT rf FROM RequestFriendModel rf WHERE rf.userReceive = :user")
+    List<RequestFriendModel> findAllRequestsToUser(@Param("user") UserModel userModel);
 }
