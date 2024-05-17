@@ -27,9 +27,9 @@ public class RequestFriendControllerImpl implements RequestFriendController {
     }
 
     @Override
-    @PostMapping("/requests")
-    public RequestFriendModelDto addRequestFriend(@RequestBody RequestFriendModelDto requestFriendModelDto) {
-        return requestFriendService.addRequestFriend(requestFriendModelDto);
+    @PostMapping("/requests/{idSender}/{idReceiver}")
+    public RequestFriendModelDto addRequestFriend(@PathVariable Integer idSender, @PathVariable Integer idReceiver) {
+        return requestFriendService.addRequestFriend(idSender, idReceiver);
     }
 
     @Override
@@ -42,5 +42,11 @@ public class RequestFriendControllerImpl implements RequestFriendController {
     @DeleteMapping("/requests/{id}")
     public boolean deleteRequestFriendById(@PathVariable Integer id) {
         return requestFriendService.deleteRequestFriendById(id);
+    }
+
+    @Override
+    @GetMapping("/requestId/{userRequestId}/{userReceiveId}")
+    public Integer findByUserRequestAndUserReceive(@PathVariable Integer userRequestId, @PathVariable Integer userReceiveId) {
+        return requestFriendService.findByUserRequestAndUserReceive(userRequestId, userReceiveId);
     }
 }

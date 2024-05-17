@@ -43,15 +43,32 @@ public class UserModel implements UserDetails {
 
 
     /** Relaciones tabla Friends */
-    @OneToMany(mappedBy = "user1", cascade = CascadeType.ALL)
-    List<FriendsModel> userFriendsModelList;
-
-    @OneToMany(mappedBy = "user2", cascade = CascadeType.ALL)
-    List<FriendsModel> friendsModelList;
+    @ManyToMany
+    @JoinTable(
+            name = "friends",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "friend_id")
+    )
+    private List<UserModel> friends;
 
     /** Relaciones tabla Libros Favoritos */
     @OneToMany(mappedBy = "userModel", cascade = CascadeType.ALL)
     List<FavoriteBooksModel> favoriteBooksModelsList;
+
+
+    public void addFriend(UserModel friend) {
+        if (!this.friends.contains(friend)) {
+            this.friends.add(friend);
+            friend.getFriends().add(this);
+        }
+    }
+
+    public void removeFriend(UserModel friend){
+        if(this.friends.contains(friend)){
+            this.friends.remove(friend);
+            friend.removeFriend(this);
+        }
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

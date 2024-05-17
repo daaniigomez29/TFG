@@ -31,13 +31,5 @@ public class Mapper {
 
     public RequestFriendModelDto toRequestDto(RequestFriendModel requestFriendModel){return modelMapper.map(requestFriendModel, RequestFriendModelDto.class);}
     public RequestFriendModel toRequest(RequestFriendModelDto requestFriendModelDto){return modelMapper.map(requestFriendModelDto, RequestFriendModel.class);}
-
-    public FriendsModelDto toFriendsDto(FriendsModel friendsModel){return modelMapper.map(friendsModel, FriendsModelDto.class);}
-    public FriendsModel toFriends(FriendsModelDto friendsModelDto){return modelMapper.map(friendsModelDto, FriendsModel.class);}
-
-
-
-
-
-
+    
 }

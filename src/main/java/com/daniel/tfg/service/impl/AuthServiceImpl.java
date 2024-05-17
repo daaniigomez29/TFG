@@ -53,7 +53,7 @@ public class AuthServiceImpl implements AuthService {
 
         userExist = userRepository.findByEmail(request.getEmail()).isPresent();
 
-        if(userExist) {
+        if(!userExist) {
             UserModel user = UserModel.builder()
                     .email(request.getEmail())
                     .nameuser(request.getNameuser())

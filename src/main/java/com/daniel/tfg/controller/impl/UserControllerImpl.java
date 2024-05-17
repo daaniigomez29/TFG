@@ -22,6 +22,12 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
+    @GetMapping("/users/{id}/friends")
+    public List<UserModelDto> getAllFriends(@PathVariable Integer id) {
+        return userService.getAllFriends(id);
+    }
+
+    @Override
     @GetMapping("/user/{id}")
     public UserModelDto getUserById(@PathVariable Integer id) {
         return userService.getUserById(id);
