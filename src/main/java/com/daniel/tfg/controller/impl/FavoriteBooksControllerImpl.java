@@ -2,6 +2,7 @@ package com.daniel.tfg.controller.impl;
 
 import com.daniel.tfg.controller.FavoriteBooksController;
 import com.daniel.tfg.model.dto.FavoriteBooksModelDto;
+import com.daniel.tfg.model.dto.FavoriteBooksModelDtoWUser;
 import com.daniel.tfg.model.dto.UserModelDto;
 import com.daniel.tfg.service.FavoriteBooksService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class FavoriteBooksControllerImpl implements FavoriteBooksController {
     private FavoriteBooksService favoriteBooksService;
     @Override
     @GetMapping("/favorites/{id}")
-    public List<FavoriteBooksModelDto> getAllFavoriteBooksOfUser(@PathVariable Integer id) {
+    public List<FavoriteBooksModelDtoWUser> getAllFavoriteBooksOfUser(@PathVariable Integer id) {
         return favoriteBooksService.getAllFavoriteBooksOfUser(id);
     }
 

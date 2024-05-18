@@ -6,6 +6,7 @@ import com.daniel.tfg.model.BookModel;
 import com.daniel.tfg.model.FavoriteBooksModel;
 import com.daniel.tfg.model.UserModel;
 import com.daniel.tfg.model.dto.FavoriteBooksModelDto;
+import com.daniel.tfg.model.dto.FavoriteBooksModelDtoWUser;
 import com.daniel.tfg.repository.BookRepository;
 import com.daniel.tfg.repository.FavoriteBooksRepository;
 import com.daniel.tfg.repository.UserRepository;
@@ -29,10 +30,10 @@ public class FavoriteBooksServiceImpl implements FavoriteBooksService {
     @Autowired
     private Mapper modelMapper;
     @Override
-    public List<FavoriteBooksModelDto> getAllFavoriteBooksOfUser(Integer id) {
+    public List<FavoriteBooksModelDtoWUser> getAllFavoriteBooksOfUser(Integer id) {
         UserModel userFound = userRepository.findById(id).orElse(null);
         if(userFound != null){
-          return favoriteBooksRepository.obtainAllFavoriteBooks(userFound).stream().map(favoriteBooksModel -> modelMapper.toFavoriteDto(favoriteBooksModel)).collect(Collectors.toList());
+          return favoriteBooksRepository.obtainAllFavoriteBooks(userFound).stream().map(favoriteBooksModel -> modelMapper.toFavoriteDtoWUser(favoriteBooksModel)).collect(Collectors.toList());
         } else {
             throw new UserInvalidException();
         }

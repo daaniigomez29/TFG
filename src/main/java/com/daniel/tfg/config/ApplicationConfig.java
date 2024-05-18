@@ -4,10 +4,7 @@ import com.daniel.tfg.model.BookModel;
 import com.daniel.tfg.model.FavoriteBooksModel;
 import com.daniel.tfg.model.RequestFriendModel;
 import com.daniel.tfg.model.UserModel;
-import com.daniel.tfg.model.dto.BookModelDto;
-import com.daniel.tfg.model.dto.FavoriteBooksModelDto;
-import com.daniel.tfg.model.dto.RequestFriendModelDto;
-import com.daniel.tfg.model.dto.UserModelDto;
+import com.daniel.tfg.model.dto.*;
 import com.daniel.tfg.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -60,6 +57,16 @@ public class ApplicationConfig {
                 .addMappings(mapper -> {
                     mapper.map(RequestFriendModel::getUserRequest, RequestFriendModelDto::setUserModelDtoRequest);
                     mapper.map(RequestFriendModel::getUserReceive, RequestFriendModelDto::setUserModelDtoReceive);
+                });
+
+        modelMapper.createTypeMap(RequestFriendModel.class, RequestFriendModelDtoWUserReceive.class)
+                .addMappings(mapper -> {
+                    mapper.map(RequestFriendModel::getUserRequest, RequestFriendModelDtoWUserReceive::setUserModelDtoRequest);
+                });
+
+        modelMapper.createTypeMap(FavoriteBooksModel.class, FavoriteBooksModelDtoWUser.class)
+                .addMappings(mapper -> {
+                    mapper.map(FavoriteBooksModel::getBookModel, FavoriteBooksModelDtoWUser::setBookModelDto);
                 });
         return modelMapper;
     }

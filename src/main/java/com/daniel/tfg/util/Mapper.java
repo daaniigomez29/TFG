@@ -30,9 +30,13 @@ public class Mapper {
     public BookModel toBook(BookModelDto bookModelDto){return modelMapper.map(bookModelDto, BookModel.class);}
 
     public FavoriteBooksModelDto toFavoriteDto(FavoriteBooksModel favoriteBooksModel){return modelMapper.map(favoriteBooksModel, FavoriteBooksModelDto.class);}
+    public FavoriteBooksModelDtoWUser toFavoriteDtoWUser(FavoriteBooksModel favoriteBooksModel){return modelMapper.map(favoriteBooksModel, FavoriteBooksModelDtoWUser.class);}
+
     public FavoriteBooksModel toFavorite(FavoriteBooksModelDto favoriteBooksModelDto){return modelMapper.map(favoriteBooksModelDto, FavoriteBooksModel.class);}
 
     public RequestFriendModelDto toRequestDto(RequestFriendModel requestFriendModel){return modelMapper.map(requestFriendModel, RequestFriendModelDto.class);}
+    public RequestFriendModelDtoWUserReceive toRequestDtoWUserReceive(RequestFriendModel requestFriendModel){return modelMapper.map(requestFriendModel, RequestFriendModelDtoWUserReceive.class);}
+
     public RequestFriendModel toRequest(RequestFriendModelDto requestFriendModelDto){return modelMapper.map(requestFriendModelDto, RequestFriendModel.class);}
 
     

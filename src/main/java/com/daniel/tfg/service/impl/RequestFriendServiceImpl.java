@@ -5,6 +5,7 @@ import com.daniel.tfg.exception.UserInvalidException;
 import com.daniel.tfg.model.RequestFriendModel;
 import com.daniel.tfg.model.UserModel;
 import com.daniel.tfg.model.dto.RequestFriendModelDto;
+import com.daniel.tfg.model.dto.RequestFriendModelDtoWUserReceive;
 import com.daniel.tfg.model.dto.UserModelDto;
 import com.daniel.tfg.repository.RequestFriendRepository;
 import com.daniel.tfg.repository.UserRepository;
@@ -27,10 +28,10 @@ public class RequestFriendServiceImpl implements RequestFriendService {
     @Autowired
     private Mapper modelMapper;
     @Override
-    public List<RequestFriendModelDto> findAllRequestsToUser(Integer id) {
+    public List<RequestFriendModelDtoWUserReceive> findAllRequestsToUser(Integer id) {
         UserModel userFound = userRepository.findById(id).orElse(null);
         if(userFound != null){
-            return requestFriendRepository.findAllRequestsToUser(userFound).stream().map(requestFriendModel -> modelMapper.toRequestDto(requestFriendModel)).collect(Collectors.toList());
+            return requestFriendRepository.findAllRequestsToUser(userFound).stream().map(requestFriendModel -> modelMapper.toRequestDtoWUserReceive(requestFriendModel)).collect(Collectors.toList());
         } else {
             throw new UserInvalidException();
         }

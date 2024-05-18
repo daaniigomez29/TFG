@@ -2,6 +2,7 @@ package com.daniel.tfg.controller.impl;
 
 import com.daniel.tfg.controller.RequestFriendController;
 import com.daniel.tfg.model.dto.RequestFriendModelDto;
+import com.daniel.tfg.model.dto.RequestFriendModelDtoWUserReceive;
 import com.daniel.tfg.model.dto.UserModelDto;
 import com.daniel.tfg.service.RequestFriendService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class RequestFriendControllerImpl implements RequestFriendController {
     private RequestFriendService requestFriendService;
     @Override
     @GetMapping("/requests/{id}")
-    public List<RequestFriendModelDto> findAllRequestsToUser(@PathVariable Integer id) {
+    public List<RequestFriendModelDtoWUserReceive> findAllRequestsToUser(@PathVariable Integer id) {
         return requestFriendService.findAllRequestsToUser(id);
     }
 
