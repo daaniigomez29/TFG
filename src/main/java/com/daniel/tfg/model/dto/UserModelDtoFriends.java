@@ -9,13 +9,11 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserModelDto {
+public class UserModelDtoFriends {
     private Integer id;
     private String email;
     private String nameuser;
     private String name;
     private String image;
     private boolean admin;
-    private List<UserModelDtoFriends> friends;
-
 }

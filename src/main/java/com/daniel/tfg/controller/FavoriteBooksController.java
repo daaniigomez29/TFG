@@ -6,9 +6,11 @@ import com.daniel.tfg.model.dto.UserModelDto;
 import java.util.List;
 
 public interface FavoriteBooksController {
-    public List<FavoriteBooksModelDto> getAllFavoriteBooksOfUser(Integer id);
-    public FavoriteBooksModelDto getFavoriteBookById();
-    public FavoriteBooksModelDto addFavoriteBooks(FavoriteBooksModelDto favoriteBooksModelDto);
-    public FavoriteBooksModelDto editFavoriteBooks(FavoriteBooksModelDto favoriteBooksModelDto);
-    public boolean deleteFavoriteBooksById(Integer id);
+    List<FavoriteBooksModelDto> getAllFavoriteBooksOfUser(Integer id);
+    FavoriteBooksModelDto getFavoriteBookById();
+    FavoriteBooksModelDto addFavoriteBooks(Integer userId, Integer bookId);
+    FavoriteBooksModelDto editFavoriteBooks(FavoriteBooksModelDto favoriteBooksModelDto);
+    boolean deleteFavoriteBooksById(Integer userId, Integer bookId);
+    Integer findByUserIdAndBookId(Integer userId, Integer bookId);
+
 }

@@ -1,10 +1,11 @@
 package com.daniel.tfg.service.impl;
 
+import com.daniel.tfg.exception.GlobalException;
 import com.daniel.tfg.exception.UserInvalidException;
+import com.daniel.tfg.model.BookModel;
+import com.daniel.tfg.model.FavoriteBooksModel;
 import com.daniel.tfg.model.UserModel;
-import com.daniel.tfg.model.dto.BookModelDto;
 import com.daniel.tfg.model.dto.FavoriteBooksModelDto;
-import com.daniel.tfg.model.dto.UserModelDto;
 import com.daniel.tfg.repository.BookRepository;
 import com.daniel.tfg.repository.FavoriteBooksRepository;
 import com.daniel.tfg.repository.UserRepository;
@@ -43,8 +44,16 @@ public class FavoriteBooksServiceImpl implements FavoriteBooksService {
     }
 
     @Override
-    public FavoriteBooksModelDto addFavoriteBooks(FavoriteBooksModelDto favoriteBooksModelDto) {
-        return modelMapper.toFavoriteDto(favoriteBooksRepository.save(modelMapper.toFavorite(favoriteBooksModelDto)));
+    public FavoriteBooksModelDto addFavoriteBooks(Integer userId, Integer bookId) {
+        UserModel userModel = userRepository.findById(userId).orElseThrow(UserInvalidException::new);
+        BookModel bookModel = bookRepository.findById(bookId).orElseThrow(() -> new GlobalException("El libro no existe"));
+
+        FavoriteBooksModel favoriteBooksModel = new FavoriteBooksModel();
+        favoriteBooksModel.setUserModel(userModel);
+        favoriteBooksModel.setBookModel(bookModel);
+
+
+        return modelMapper.toFavoriteDto(favoriteBooksRepository.save(favoriteBooksModel));
     }
 
     @Override
@@ -53,14 +62,21 @@ public class FavoriteBooksServiceImpl implements FavoriteBooksService {
     }
 
     @Override
-    public boolean deleteFavoriteBooksById(Integer id) {
-        FavoriteBooksModelDto favoriteBooksModelDto = modelMapper.toFavoriteDto(favoriteBooksRepository.findById(id).orElse(null));
+    public boolean deleteFavoriteBooksById(Integer userId, Integer bookId) {
+        Integer favoriteId = findByUserIdAndBookId(userId, bookId);
 
-        if(favoriteBooksModelDto != null){
-            favoriteBooksRepository.deleteById(id);
+        if(favoriteId != null){
+            favoriteBooksRepository.deleteById(favoriteId);
             return true;
         } else{
             return false;
         }
+    }
+
+    @Override
+    public Integer findByUserIdAndBookId(Integer userId, Integer bookId) {
+        FavoriteBooksModel favoriteBooksModel = favoriteBooksRepository.findByUserModelIdAndBookModelId(userId, bookId).orElseThrow(() -> new GlobalException("Este libro no se encuentra en favoritos"));
+
+        return favoriteBooksModel.getId();
     }
 }

@@ -2,6 +2,7 @@ package com.daniel.tfg.controller.impl;
 
 import com.daniel.tfg.controller.UserController;
 import com.daniel.tfg.model.dto.UserModelDto;
+import com.daniel.tfg.model.dto.UserModelDtoFriends;
 import com.daniel.tfg.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @GetMapping("/users/{id}/friends")
-    public List<UserModelDto> getAllFriends(@PathVariable Integer id) {
+    public List<UserModelDtoFriends> getAllFriends(@PathVariable Integer id) {
         return userService.getAllFriends(id);
     }
 

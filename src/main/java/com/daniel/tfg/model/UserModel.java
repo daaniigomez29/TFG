@@ -43,7 +43,7 @@ public class UserModel implements UserDetails {
 
 
     /** Relaciones tabla Friends */
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "friends",
             joinColumns = @JoinColumn(name = "user_id"),

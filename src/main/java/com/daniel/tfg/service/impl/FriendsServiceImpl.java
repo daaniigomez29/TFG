@@ -26,9 +26,8 @@ public class FriendsServiceImpl implements FriendsService {
 
     @Override
     public List<UserModelDto> addFriend(Integer idRequest, Integer idReceiver) {
-        RequestFriendModelDto requestFriendModelDto = modelMapper.toRequestDto(requestFriendRepository.findById(idRequest).orElse(null));
+        RequestFriendModelDto requestFriendModelDto = modelMapper.toRequestDto(requestFriendRepository.findByUserRequestIdAndUserReceiveId(idRequest, idReceiver).orElseThrow(() -> new GlobalException("La solicitud no existe")));
 
-        if(requestFriendModelDto != null){
             UserModel userRequest =  userRepository.findById(idRequest).orElseThrow(UserInvalidException::new);
             UserModel userReceiver = userRepository.findById(idReceiver).orElseThrow(UserInvalidException::new);
 
@@ -40,9 +39,6 @@ public class FriendsServiceImpl implements FriendsService {
             requestFriendRepository.delete(modelMapper.toRequest(requestFriendModelDto));
 
             return userReceiver.getFriends().stream().map(userModel -> modelMapper.toUserDTO(userModel)).collect(Collectors.toList());
-        } else{
-            throw new GlobalException("La solicitud no existe");
-        }
     }
 
     @Override
@@ -50,11 +46,14 @@ public class FriendsServiceImpl implements FriendsService {
         UserModel userModel = userRepository.findById(idRequest).orElseThrow(UserInvalidException::new);
         UserModel friend = userRepository.findById(idReceiver).orElseThrow(UserInvalidException::new);
 
-        userModel.removeFriend(friend);
+        if(userModel.getFriends().contains(friend)){
+            userModel.removeFriend(friend);
 
-        userRepository.save(userModel);
-        userRepository.save(friend);
-
-        return true;
+            userRepository.save(userModel);
+            userRepository.save(friend);
+            return true;
+        } else{
+            throw new GlobalException("No existe ninguna amistad");
+        }
     }
 }

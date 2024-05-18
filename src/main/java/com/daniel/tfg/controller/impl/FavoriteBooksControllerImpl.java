@@ -27,9 +27,9 @@ public class FavoriteBooksControllerImpl implements FavoriteBooksController {
     }
 
     @Override
-    @PostMapping("/favorites")
-    public FavoriteBooksModelDto addFavoriteBooks(@RequestBody FavoriteBooksModelDto favoriteBooksModelDto) {
-        return favoriteBooksService.addFavoriteBooks(favoriteBooksModelDto);
+    @PostMapping("/favorites/{userId}/{bookId}")
+    public FavoriteBooksModelDto addFavoriteBooks(@PathVariable Integer userId, @PathVariable Integer bookId) {
+        return favoriteBooksService.addFavoriteBooks(userId, bookId);
     }
 
     @Override
@@ -39,8 +39,14 @@ public class FavoriteBooksControllerImpl implements FavoriteBooksController {
     }
 
     @Override
-    @DeleteMapping("/favorites/{id}")
-    public boolean deleteFavoriteBooksById(@PathVariable Integer id) {
-        return favoriteBooksService.deleteFavoriteBooksById(id);
+    @DeleteMapping("/favorites/{userId}/{bookId}")
+    public boolean deleteFavoriteBooksById(@PathVariable Integer userId, @PathVariable Integer bookId) {
+        return favoriteBooksService.deleteFavoriteBooksById(userId, bookId);
+    }
+
+    @Override
+    @GetMapping("/favorites/{userId}/{bookId}")
+    public Integer findByUserIdAndBookId(@PathVariable Integer userId, @PathVariable Integer bookId) {
+        return favoriteBooksService.findByUserIdAndBookId(userId, bookId);
     }
 }

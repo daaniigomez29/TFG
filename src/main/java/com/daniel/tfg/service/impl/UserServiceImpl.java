@@ -3,6 +3,7 @@ package com.daniel.tfg.service.impl;
 import com.daniel.tfg.exception.UserInvalidException;
 import com.daniel.tfg.model.UserModel;
 import com.daniel.tfg.model.dto.UserModelDto;
+import com.daniel.tfg.model.dto.UserModelDtoFriends;
 import com.daniel.tfg.repository.UserRepository;
 import com.daniel.tfg.service.UserService;
 import com.daniel.tfg.util.Mapper;
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserModelDto> getAllFriends(Integer id) {
+    public List<UserModelDtoFriends> getAllFriends(Integer id) {
         UserModelDto userModelDto = modelMapper.toUserDTO(userRepository.findById(id).orElseThrow(UserInvalidException::new));
         return userModelDto.getFriends();
     }

@@ -22,6 +22,9 @@ public class Mapper {
     public UserModel toUser(UserModelDto userDTO){
         return modelMapper.map(userDTO, UserModel.class);
     }
+    public UserModelDtoFriends toUserDTOFriend(UserModel user){
+        return modelMapper.map(user, UserModelDtoFriends.class);
+    }
 
     public BookModelDto toBookDto(BookModel bookModel){return modelMapper.map(bookModel, BookModelDto.class);}
     public BookModel toBook(BookModelDto bookModelDto){return modelMapper.map(bookModelDto, BookModel.class);}
@@ -31,5 +34,6 @@ public class Mapper {
 
     public RequestFriendModelDto toRequestDto(RequestFriendModel requestFriendModel){return modelMapper.map(requestFriendModel, RequestFriendModelDto.class);}
     public RequestFriendModel toRequest(RequestFriendModelDto requestFriendModelDto){return modelMapper.map(requestFriendModelDto, RequestFriendModel.class);}
+
     
 }

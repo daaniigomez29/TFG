@@ -47,16 +47,15 @@ public class RequestFriendServiceImpl implements RequestFriendService {
         UserModelDto userReceiver = modelMapper.toUserDTO(userRepository.findById(idReceiver).orElse(null));
 
         if(userSender != null && userReceiver != null){
-            RequestFriendModelDto requestFriendModelDto = new RequestFriendModelDto();
-            requestFriendModelDto.setUserModelDtoRequest(userSender);
-            requestFriendModelDto.setUserModelDtoReceive(userReceiver);
+            RequestFriendModel requestFriendModel = new RequestFriendModel();
+            requestFriendModel.setUserRequest(modelMapper.toUser(userSender));
+            requestFriendModel.setUserReceive(modelMapper.toUser(userReceiver));
 
-            return modelMapper.toRequestDto(requestFriendRepository.save(modelMapper.toRequest(requestFriendModelDto)));
+            return modelMapper.toRequestDto(requestFriendRepository.save(requestFriendModel));
         } else{
             throw new UserInvalidException();
         }
     }
-
     @Override
     public RequestFriendModelDto editRequestFriend(RequestFriendModelDto requestFriendModelDto) {
         return null;
