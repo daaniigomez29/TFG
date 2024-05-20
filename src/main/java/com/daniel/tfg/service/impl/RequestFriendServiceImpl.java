@@ -51,7 +51,13 @@ public class RequestFriendServiceImpl implements RequestFriendService {
 
         RequestFriendModel requestFriendModel2 = requestFriendRepository.findByUserRequestIdAndUserReceiveId(idReceiver, idSender).orElse(null); //Esta búsqueda sirve para comprobar que ninguno de los 2 usuarios ha enviado una solicitud
 
-        if(requestFriendModelFound == null && requestFriendModel2 == null){
+        if(requestFriendModelFound == null && requestFriendModel2 == null && !userSender.getEmail().equals(userReceiver.getEmail())){
+            userSender.getFriends().forEach(userModelDtoFriends -> {
+                if (userModelDtoFriends.equals(modelMapper.toUserDTOFriend(userReceiver))){
+                    throw new GlobalException("El usuario ya ha sido añadido como amigo");
+                }
+            });
+
             RequestFriendModel requestFriendModel = new RequestFriendModel();
             requestFriendModel.setUserRequest(modelMapper.toUser(userSender));
             requestFriendModel.setUserReceive(modelMapper.toUser(userReceiver));

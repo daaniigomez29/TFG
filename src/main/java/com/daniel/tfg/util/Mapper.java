@@ -25,6 +25,9 @@ public class Mapper {
     public UserModelDtoFriends toUserDTOFriend(UserModel user){
         return modelMapper.map(user, UserModelDtoFriends.class);
     }
+    public UserModelDtoFriends toUserDTOFriend(UserModelDto userModelDto){
+        return modelMapper.map(userModelDto, UserModelDtoFriends.class);
+    }
 
     public BookModelDto toBookDto(BookModel bookModel){return modelMapper.map(bookModel, BookModelDto.class);}
     public BookModel toBook(BookModelDto bookModelDto){return modelMapper.map(bookModelDto, BookModel.class);}
