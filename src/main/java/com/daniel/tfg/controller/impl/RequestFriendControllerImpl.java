@@ -40,9 +40,9 @@ public class RequestFriendControllerImpl implements RequestFriendController {
     }
 
     @Override
-    @DeleteMapping("/requests/{id}")
-    public boolean deleteRequestFriendById(@PathVariable Integer id) {
-        return requestFriendService.deleteRequestFriendById(id);
+    @DeleteMapping("/requests/{idSender}/{idReceiver}")
+    public boolean deleteRequestFriend(@PathVariable Integer idSender, @PathVariable Integer idReceiver) {
+        return requestFriendService.deleteRequestFriend(idSender, idReceiver);
     }
 
     @Override

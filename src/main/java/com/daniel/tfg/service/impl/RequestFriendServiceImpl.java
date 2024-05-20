@@ -44,17 +44,21 @@ public class RequestFriendServiceImpl implements RequestFriendService {
 
     @Override
     public RequestFriendModelDto addRequestFriend(Integer idSender, Integer idReceiver) {
-        UserModelDto userSender = modelMapper.toUserDTO(userRepository.findById(idSender).orElse(null));
-        UserModelDto userReceiver = modelMapper.toUserDTO(userRepository.findById(idReceiver).orElse(null));
+        UserModelDto userSender = modelMapper.toUserDTO(userRepository.findById(idSender).orElseThrow(UserInvalidException::new));
+        UserModelDto userReceiver = modelMapper.toUserDTO(userRepository.findById(idReceiver).orElseThrow(UserInvalidException::new));
 
-        if(userSender != null && userReceiver != null){
+        RequestFriendModel requestFriendModelFound = requestFriendRepository.findByUserRequestIdAndUserReceiveId(idSender, idReceiver).orElse(null);
+
+        RequestFriendModel requestFriendModel2 = requestFriendRepository.findByUserRequestIdAndUserReceiveId(idReceiver, idSender).orElse(null); //Esta búsqueda sirve para comprobar que ninguno de los 2 usuarios ha enviado una solicitud
+
+        if(requestFriendModelFound == null && requestFriendModel2 == null){
             RequestFriendModel requestFriendModel = new RequestFriendModel();
             requestFriendModel.setUserRequest(modelMapper.toUser(userSender));
             requestFriendModel.setUserReceive(modelMapper.toUser(userReceiver));
 
             return modelMapper.toRequestDto(requestFriendRepository.save(requestFriendModel));
         } else{
-            throw new UserInvalidException();
+            throw new GlobalException("La solicitud ya ha sido enviada");
         }
     }
     @Override
@@ -63,11 +67,11 @@ public class RequestFriendServiceImpl implements RequestFriendService {
     }
 
     @Override
-    public boolean deleteRequestFriendById(Integer id) {
-        RequestFriendModelDto requestFriendModelDto = modelMapper.toRequestDto(requestFriendRepository.findById(id).orElse(null));
+    public boolean deleteRequestFriend(Integer idSender, Integer idReceiver) {
+        RequestFriendModel requestFriendModel = requestFriendRepository.findByUserRequestIdAndUserReceiveId(idSender, idReceiver).orElse(null);
 
-        if(requestFriendModelDto != null){
-            requestFriendRepository.deleteById(id);
+        if(requestFriendModel != null){
+            requestFriendRepository.deleteById(requestFriendModel.getId());
             return true;
         } else{
             return false;

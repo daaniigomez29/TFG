@@ -49,12 +49,18 @@ public class FavoriteBooksServiceImpl implements FavoriteBooksService {
         UserModel userModel = userRepository.findById(userId).orElseThrow(UserInvalidException::new);
         BookModel bookModel = bookRepository.findById(bookId).orElseThrow(() -> new GlobalException("El libro no existe"));
 
-        FavoriteBooksModel favoriteBooksModel = new FavoriteBooksModel();
-        favoriteBooksModel.setUserModel(userModel);
-        favoriteBooksModel.setBookModel(bookModel);
+        FavoriteBooksModel favoriteBooksModelFound = favoriteBooksRepository.findByUserModelIdAndBookModelId(userId, bookId).orElse(null);
+
+        if(favoriteBooksModelFound == null){
+            FavoriteBooksModel favoriteBooksModel = new FavoriteBooksModel();
+            favoriteBooksModel.setUserModel(userModel);
+            favoriteBooksModel.setBookModel(bookModel);
 
 
-        return modelMapper.toFavoriteDto(favoriteBooksRepository.save(favoriteBooksModel));
+            return modelMapper.toFavoriteDto(favoriteBooksRepository.save(favoriteBooksModel));
+        } else{
+            throw new GlobalException("Este libro ya ha sido marcado como favorito");
+        }
     }
 
     @Override

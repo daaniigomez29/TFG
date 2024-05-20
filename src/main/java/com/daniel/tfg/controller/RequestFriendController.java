@@ -12,6 +12,6 @@ public interface RequestFriendController {
     public RequestFriendModelDto getRequestFriendByUserId();
     public RequestFriendModelDto addRequestFriend(Integer idSender, Integer idReceiver);
     public RequestFriendModelDto editRequestFriend(RequestFriendModelDto requestFriendModelDto);
-    public boolean deleteRequestFriendById(Integer id);
+    public boolean deleteRequestFriend(Integer idSender, Integer idReceiver);
     public Integer findByUserRequestAndUserReceive(Integer userRequestId, Integer userReceiveId);
 }

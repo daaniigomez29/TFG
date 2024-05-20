@@ -1,5 +1,6 @@
 package com.daniel.tfg.model;
 
+import com.daniel.tfg.exception.GlobalException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -60,13 +61,17 @@ public class UserModel implements UserDetails {
         if (!this.friends.contains(friend)) {
             this.friends.add(friend);
             friend.getFriends().add(this);
+        } else{
+            throw new GlobalException("El usuario ya ha sido añadido como amigo");
         }
     }
 
     public void removeFriend(UserModel friend){
         if(this.friends.contains(friend)){
             this.friends.remove(friend);
-            friend.removeFriend(this);
+            friend.getFriends().remove(this);
+        } else{
+            throw new GlobalException("El usuario ya ha sido eliminado como amigo");
         }
     }
 

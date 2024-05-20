@@ -8,6 +8,7 @@ import com.daniel.tfg.model.dto.LoginRequest;
 import com.daniel.tfg.model.dto.RegisterRequest;
 import com.daniel.tfg.model.UserModel;
 import com.daniel.tfg.model.dto.UserModelDto;
+import com.daniel.tfg.model.dto.UserModelDtoFriends;
 import com.daniel.tfg.repository.UserRepository;
 import com.daniel.tfg.service.AuthService;
 import com.daniel.tfg.util.Mapper;
@@ -37,6 +38,7 @@ public class AuthServiceImpl implements AuthService {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         UserDetails user = userRepository.findByEmail(request.getEmail()).orElseThrow();
         UserModel user2 = userRepository.findByEmail(request.getEmail()).orElseThrow();
+        UserModelDto userModelDto = modelMapper.toUserDTO(user2);
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("nameuser", user2.getNameuser());
         extraClaims.put("name", user2.getName());
