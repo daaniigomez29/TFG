@@ -29,19 +29,19 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    @GetMapping("/user/{id}")
+    @GetMapping("/users/{id}")
     public UserModelDto getUserById(@PathVariable Integer id) {
         return userService.getUserById(id);
     }
 
     @Override
-    @PutMapping("/user/{id}")
+    @PutMapping("/users/{id}")
     public UserModelDto editUser(@RequestBody UserModelDto userModelDto) {
         return userService.editUser(userModelDto);
     }
 
     @Override
-    @DeleteMapping("user/{id}")
+    @DeleteMapping("users/{id}")
     public boolean deleteUserById(@PathVariable Integer id) {
         return userService.deleteUserById(id);
     }

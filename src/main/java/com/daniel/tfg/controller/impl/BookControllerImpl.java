@@ -21,25 +21,25 @@ public class BookControllerImpl implements BookController {
     }
 
     @Override
-    @GetMapping("/book/{id}")
+    @GetMapping("/books/{id}")
     public BookModelDto getBookById(@PathVariable Integer id) {
         return bookService.getBookById(id);
     }
 
     @Override
-    @PostMapping("/book")
+    @PostMapping("/books")
     public BookModelDto addBook(@RequestBody BookModelDto bookModelDto) {
         return bookService.addBook(bookModelDto);
     }
 
     @Override
-    @PutMapping("/book/{id}")
+    @PutMapping("/books/{id}")
     public BookModelDto editBook(@RequestBody BookModelDto bookModelDto) {
         return bookService.editBook(bookModelDto);
     }
 
     @Override
-    @DeleteMapping("/book/{id}")
+    @DeleteMapping("/books/{id}")
     public boolean deleteBookById(@PathVariable Integer id) {
         return bookService.deleteBookById(id);
     }
