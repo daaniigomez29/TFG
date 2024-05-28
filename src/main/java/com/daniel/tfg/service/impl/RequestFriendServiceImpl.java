@@ -1,7 +1,6 @@
 package com.daniel.tfg.service.impl;
 
 import com.daniel.tfg.exception.GlobalException;
-import com.daniel.tfg.exception.UserInvalidException;
 import com.daniel.tfg.model.RequestFriendModel;
 import com.daniel.tfg.model.UserModel;
 import com.daniel.tfg.model.dto.RequestFriendModelDto;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,7 +31,7 @@ public class RequestFriendServiceImpl implements RequestFriendService {
         if(userFound != null){
             return requestFriendRepository.findAllRequestsToUser(userFound).stream().map(requestFriendModel -> modelMapper.toRequestDtoWUserReceive(requestFriendModel)).collect(Collectors.toList());
         } else {
-            throw new UserInvalidException();
+            throw new GlobalException("El usuario no existe");
         }
     }
 
@@ -44,8 +42,8 @@ public class RequestFriendServiceImpl implements RequestFriendService {
 
     @Override
     public RequestFriendModelDto addRequestFriend(Integer idSender, Integer idReceiver) {
-        UserModelDto userSender = modelMapper.toUserDTO(userRepository.findById(idSender).orElseThrow(UserInvalidException::new));
-        UserModelDto userReceiver = modelMapper.toUserDTO(userRepository.findById(idReceiver).orElseThrow(UserInvalidException::new));
+        UserModelDto userSender = modelMapper.toUserDTO(userRepository.findById(idSender).orElseThrow(() -> new GlobalException("El usuario no existe")));
+        UserModelDto userReceiver = modelMapper.toUserDTO(userRepository.findById(idReceiver).orElseThrow(() -> new GlobalException("El usuario no existe")));
 
         RequestFriendModel requestFriendModelFound = requestFriendRepository.findByUserRequestIdAndUserReceiveId(idSender, idReceiver).orElse(null);
 

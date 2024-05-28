@@ -1,7 +1,6 @@
 package com.daniel.tfg.service.impl;
 
 import com.daniel.tfg.exception.GlobalException;
-import com.daniel.tfg.exception.UserInvalidException;
 import com.daniel.tfg.model.BookModel;
 import com.daniel.tfg.model.FavoriteBooksModel;
 import com.daniel.tfg.model.UserModel;
@@ -35,7 +34,7 @@ public class FavoriteBooksServiceImpl implements FavoriteBooksService {
         if(userFound != null){
           return favoriteBooksRepository.obtainAllFavoriteBooks(userFound).stream().map(favoriteBooksModel -> modelMapper.toFavoriteDtoWUser(favoriteBooksModel)).collect(Collectors.toList());
         } else {
-            throw new UserInvalidException();
+            throw new GlobalException("El usuario no existe");
         }
     }
 
@@ -46,7 +45,7 @@ public class FavoriteBooksServiceImpl implements FavoriteBooksService {
 
     @Override
     public FavoriteBooksModelDto addFavoriteBooks(Integer userId, Integer bookId) {
-        UserModel userModel = userRepository.findById(userId).orElseThrow(UserInvalidException::new);
+        UserModel userModel = userRepository.findById(userId).orElseThrow(() -> new GlobalException("El usuario no existe"));
         BookModel bookModel = bookRepository.findById(bookId).orElseThrow(() -> new GlobalException("El libro no existe"));
 
         FavoriteBooksModel favoriteBooksModelFound = favoriteBooksRepository.findByUserModelIdAndBookModelId(userId, bookId).orElse(null);

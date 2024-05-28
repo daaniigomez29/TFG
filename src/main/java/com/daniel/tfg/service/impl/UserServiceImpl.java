@@ -1,13 +1,12 @@
 package com.daniel.tfg.service.impl;
 
-import com.daniel.tfg.exception.UserInvalidException;
+import com.daniel.tfg.exception.GlobalException;
 import com.daniel.tfg.model.UserModel;
 import com.daniel.tfg.model.dto.UserModelDto;
 import com.daniel.tfg.model.dto.UserModelDtoFriends;
 import com.daniel.tfg.repository.UserRepository;
 import com.daniel.tfg.service.UserService;
 import com.daniel.tfg.util.Mapper;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserModelDtoFriends> getAllFriends(Integer id) {
-        UserModelDto userModelDto = modelMapper.toUserDTO(userRepository.findById(id).orElseThrow(UserInvalidException::new));
+        UserModelDto userModelDto = modelMapper.toUserDTO(userRepository.findById(id).orElseThrow(() -> new GlobalException("El usuario no existe")));
         return userModelDto.getFriends();
     }
 

@@ -3,12 +3,11 @@ package com.daniel.tfg.service.impl;
 
 import com.daniel.tfg.auth.AuthResponse;
 import com.daniel.tfg.auth.JwtService;
-import com.daniel.tfg.exception.EmailInvalidException;
+import com.daniel.tfg.exception.GlobalException;
 import com.daniel.tfg.model.dto.LoginRequest;
 import com.daniel.tfg.model.dto.RegisterRequest;
 import com.daniel.tfg.model.UserModel;
 import com.daniel.tfg.model.dto.UserModelDto;
-import com.daniel.tfg.model.dto.UserModelDtoFriends;
 import com.daniel.tfg.repository.UserRepository;
 import com.daniel.tfg.service.AuthService;
 import com.daniel.tfg.util.Mapper;
@@ -68,7 +67,7 @@ public class AuthServiceImpl implements AuthService {
             userRepository.save(user);
             return modelMapper.toUserDTO(user);
         } else{
-            throw new EmailInvalidException();
+            throw new GlobalException("El usuario ya existe");
         }
     }
 }

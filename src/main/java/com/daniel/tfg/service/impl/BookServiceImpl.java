@@ -1,11 +1,9 @@
 package com.daniel.tfg.service.impl;
 
-import com.daniel.tfg.exception.BookNameInvalidException;
+import com.daniel.tfg.exception.GlobalException;
 import com.daniel.tfg.model.BookModel;
-import com.daniel.tfg.model.UserModel;
 import com.daniel.tfg.model.dto.BookModelDto;
 import com.daniel.tfg.repository.BookRepository;
-import com.daniel.tfg.repository.UserRepository;
 import com.daniel.tfg.service.BookService;
 import com.daniel.tfg.util.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +42,7 @@ public class BookServiceImpl implements BookService {
         if(bookModel != null){
             return modelMapper.toBookDto(bookRepository.save(modelMapper.toBook(bookModelDto)));
         } else{
-            throw new BookNameInvalidException();
+            throw new GlobalException("El libro no existe");
         }
     }
 

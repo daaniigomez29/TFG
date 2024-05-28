@@ -1,7 +1,6 @@
 package com.daniel.tfg.service.impl;
 
 import com.daniel.tfg.exception.GlobalException;
-import com.daniel.tfg.exception.UserInvalidException;
 import com.daniel.tfg.model.UserModel;
 import com.daniel.tfg.model.dto.RequestFriendModelDto;
 import com.daniel.tfg.model.dto.UserModelDto;
@@ -28,8 +27,8 @@ public class FriendsServiceImpl implements FriendsService {
     public List<UserModelDto> addFriend(Integer idRequest, Integer idReceiver) {
         RequestFriendModelDto requestFriendModelDto = modelMapper.toRequestDto(requestFriendRepository.findByUserRequestIdAndUserReceiveId(idRequest, idReceiver).orElseThrow(() -> new GlobalException("La solicitud no existe")));
 
-            UserModel userRequest =  userRepository.findById(idRequest).orElseThrow(UserInvalidException::new);
-            UserModel userReceiver = userRepository.findById(idReceiver).orElseThrow(UserInvalidException::new);
+            UserModel userRequest =  userRepository.findById(idRequest).orElseThrow(() -> new GlobalException("El usuario no existe"));
+            UserModel userReceiver = userRepository.findById(idReceiver).orElseThrow(() -> new GlobalException("El usuario no existe"));
 
             userReceiver.addFriend(userRequest);
 
@@ -43,8 +42,8 @@ public class FriendsServiceImpl implements FriendsService {
 
     @Override
     public boolean deleteFriend(Integer idRequest, Integer idReceiver) {
-        UserModel userModel = userRepository.findById(idRequest).orElseThrow(UserInvalidException::new);
-        UserModel friend = userRepository.findById(idReceiver).orElseThrow(UserInvalidException::new);
+        UserModel userModel = userRepository.findById(idRequest).orElseThrow(() -> new GlobalException("El usuario no existe"));
+        UserModel friend = userRepository.findById(idReceiver).orElseThrow(() -> new GlobalException("El usuario no existe"));
 
         if(userModel.getFriends().contains(friend)){
             userModel.removeFriend(friend);
