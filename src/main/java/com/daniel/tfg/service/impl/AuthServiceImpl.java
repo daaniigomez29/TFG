@@ -39,6 +39,7 @@ public class AuthServiceImpl implements AuthService {
         UserModel user2 = userRepository.findByEmail(request.getEmail()).orElseThrow();
         UserModelDto userModelDto = modelMapper.toUserDTO(user2);
         Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("idUser", user2.getId());
         extraClaims.put("nameuser", user2.getNameuser());
         extraClaims.put("name", user2.getName());
         extraClaims.put("image", user2.getImage());
