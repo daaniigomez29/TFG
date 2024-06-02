@@ -1,6 +1,9 @@
 package com.daniel.tfg.auth;
 
+import com.daniel.tfg.exception.GlobalException;
+import com.daniel.tfg.exception.TokenExpiredException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -41,7 +44,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(user.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*24))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*60*2))
                 .signWith(getKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -82,12 +85,16 @@ public class JwtService {
      */
     private Claims getAllClaims(String token)
     {
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(getKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            return Jwts
+                    .parserBuilder()
+                    .setSigningKey(getKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (ExpiredJwtException ex){
+            throw new TokenExpiredException("El token ha caducado");
+        }
     }
 
     /**
