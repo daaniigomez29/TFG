@@ -59,7 +59,7 @@ public class RequestFriendControllerImpl implements RequestFriendController {
     }
 
     /**
-     * Encuentra con ID peticion de usuario
+     * Encuentra con ID  peticion de usuario
      */
     @Override
     @GetMapping("/requestId/{userRequestId}/{userReceiveId}")

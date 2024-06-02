@@ -32,6 +32,8 @@ public class SecurityConfig {
                         authRequest
                                 .requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers("/api/v1/**").authenticated()
+                                .requestMatchers("/chat-socket/**").permitAll()
+                                .requestMatchers("/app/**").permitAll()
                                 )
                 .sessionManagement(sessionManager ->
                         sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
