@@ -14,49 +14,53 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Data
+@Data //Getter y Setter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@Table(name = "user_books", uniqueConstraints = {@UniqueConstraint(columnNames = {"username", "email"})})
+@NoArgsConstructor //Constructor sin argumentos
+@AllArgsConstructor //Constructor con todos los argumentos
+@Entity //Tabla de la bbdd
+@Table(name = "user_books", uniqueConstraints = {@UniqueConstraint(columnNames = {"username", "email"})}) //Nombre de la tabla y declaración de valores únicos
 public class UserModel implements UserDetails {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id //ID
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Generación automática de id
     private Integer id;
-    @Email(message = "El email debe ser válido")
+    @Email(message = "El email debe ser válido") //Validador que comprueba que el email sea válido
     private String email;
-    @Column(nullable = false)
-    private String nameuser;
-    private String password;
-    private String name;
-    private String image;
-    private boolean admin;
+    @Column(nullable = false) //La columna nameuser no puede ser nula
+    private String nameuser; //Nombre de usuario
+    private String password; //Contraseña del usuario
+    private String name; //Nombre del usuario
+    private String image; //Imagen de perfil del usuario
+    private boolean admin; //Declara si es admin o no
 
 
     /** Relaciones tabla solicitudes amistad */
     @OneToMany(mappedBy = "userRequest", cascade = CascadeType.ALL)
-    List<RequestFriendModel> requestFriendModelList;
+    List<RequestFriendModel> requestFriendModelList; //Lista de solicitudes que se ha enviado
 
     @OneToMany(mappedBy = "userReceive", cascade = CascadeType.ALL)
-    List<RequestFriendModel> ReceiveFriendModelList;
+    List<RequestFriendModel> ReceiveFriendModelList; //Lista de solicitudes que se ha recibido
 
 
     /** Relaciones tabla Friends */
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "friends",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "friend_id")
+            name = "friends", //Nombre de la tabla
+            joinColumns = @JoinColumn(name = "user_id"), //Columna de usuario
+            inverseJoinColumns = @JoinColumn(name = "friend_id") //Columna de amigo del usuario
     )
-    private List<UserModel> friends;
+    private List<UserModel> friends; //Lista de amigos del usuario
 
     /** Relaciones tabla Libros Favoritos */
     @OneToMany(mappedBy = "userModel", cascade = CascadeType.ALL)
-    List<FavoriteBooksModel> favoriteBooksModelsList;
+    List<FavoriteBooksModel> favoriteBooksModelsList; //Lista de libros favoritos del usuario
 
 
+    /**
+     * Añade un amigo a la lista del usuario y a la del usuario que le envió la solicitud
+     * @param friend Usuario que le envió la solicitud
+     */
     public void addFriend(UserModel friend) {
         if (!this.friends.contains(friend)) {
             this.friends.add(friend);
@@ -66,6 +70,10 @@ public class UserModel implements UserDetails {
         }
     }
 
+    /**
+     * Elimina al amigo de la lista de amigos
+     * @param friend Usuario que quiere eliminar de la lista
+     */
     public void removeFriend(UserModel friend){
         if(this.friends.contains(friend)){
             this.friends.remove(friend);
@@ -75,6 +83,7 @@ public class UserModel implements UserDetails {
         }
     }
 
+    /** Métodos para manejar el inicio de sesión de usuario */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

@@ -27,11 +27,17 @@ public class ApplicationConfig {
 
     private final UserRepository userRepository;
 
+    /**
+     * Realiza configuracion inicial de authenticationManager
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 
+    /**
+     * Inicializa ModelMapper y declara distintos mappers
+     */
     @Bean
     public ModelMapper modelMapper(){
         ModelMapper modelMapper = new ModelMapper();
@@ -79,11 +85,17 @@ public class ApplicationConfig {
         return authenticationProvider;
     }
 
+    /**
+     * Inicializa BCryptPasswordEncoder
+     */
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Obtiene detalles a partir de un correo
+     */
     @Bean
     public UserDetailsService userDetailService(){
         return email -> userRepository.findByEmail(email)

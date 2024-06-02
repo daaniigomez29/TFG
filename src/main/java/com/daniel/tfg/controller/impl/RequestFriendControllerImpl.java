@@ -10,12 +10,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controlador que maneja las distintas peticiones relacionadas con peticiones de amistad
+ */
 @RestController
 @RequestMapping("/api/v1")
 public class RequestFriendControllerImpl implements RequestFriendController {
 
     @Autowired
     private RequestFriendService requestFriendService;
+
+    /**
+     * Obtiene peticiones enviadas a un usuario
+     */
     @Override
     @GetMapping("/requests/{id}")
     public List<RequestFriendModelDtoWUserReceive> findAllRequestsToUser(@PathVariable Integer id) {
@@ -27,6 +34,9 @@ public class RequestFriendControllerImpl implements RequestFriendController {
         return requestFriendService.getRequestFriendByUserId();
     }
 
+    /**
+     * Crea peticion de usuario
+     */
     @Override
     @PostMapping("/requests/{idSender}/{idReceiver}")
     public RequestFriendModelDto addRequestFriend(@PathVariable Integer idSender, @PathVariable Integer idReceiver) {
@@ -39,12 +49,18 @@ public class RequestFriendControllerImpl implements RequestFriendController {
         return requestFriendService.editRequestFriend(requestFriendModelDto);
     }
 
+    /**
+     * Elimina peticion de usuario
+     */
     @Override
     @DeleteMapping("/requests/{idSender}/{idReceiver}")
     public boolean deleteRequestFriend(@PathVariable Integer idSender, @PathVariable Integer idReceiver) {
         return requestFriendService.deleteRequestFriend(idSender, idReceiver);
     }
 
+    /**
+     * Encuentra con ID peticion de usuario
+     */
     @Override
     @GetMapping("/requestId/{userRequestId}/{userReceiveId}")
     public Integer findByUserRequestAndUserReceive(@PathVariable Integer userRequestId, @PathVariable Integer userReceiveId) {

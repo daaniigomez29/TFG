@@ -25,20 +25,25 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    private final UserRepository userRepository;
+    private final UserRepository userRepository; //Repositorio de la tabla User
 
-    private final JwtService jwtService;
-    private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService; //Servicio para manejar token
+    private final PasswordEncoder passwordEncoder; //Encripta la contraseña
+    private final AuthenticationManager authenticationManager; //Autentica al usuario
 
     private final Mapper modelMapper;
 
+    /**
+     * Maneja el inicio de sesión del usuario, comprobando que sus credenciales son correctas
+     * @param request Objeto que contiene el correo y la contraseña que escribe el usuario para iniciar sesión
+     * @return Token con la información correspondida del usuario
+     */
     public AuthResponse login(LoginRequest request){
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         UserDetails user = userRepository.findByEmail(request.getEmail()).orElseThrow();
         UserModel user2 = userRepository.findByEmail(request.getEmail()).orElseThrow();
         UserModelDto userModelDto = modelMapper.toUserDTO(user2);
-        Map<String, Object> extraClaims = new HashMap<>();
+        Map<String, Object> extraClaims = new HashMap<>(); //Declara toda la información que quiere que tenga el token además del correo
         extraClaims.put("idUser", user2.getId());
         extraClaims.put("nameuser", user2.getNameuser());
         extraClaims.put("name", user2.getName());
@@ -50,6 +55,11 @@ public class AuthServiceImpl implements AuthService {
                 .build();
     }
 
+    /**
+     * Maneja el registro del usuario, comprobando previamente que el usuario no exista y guardándolo en la bbdd
+     * @param request Objeto que contiene los distintos datos del usuario a la hora de registrarse
+     * @return Objeto User mapeado a UserDto
+     */
     public UserModelDto register(RegisterRequest request){
         boolean userExist;
 

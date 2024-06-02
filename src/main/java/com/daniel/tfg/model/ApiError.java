@@ -6,7 +6,9 @@ import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
-
+/**
+ * Clase que maneja el estado de la petición, la fecha y hora y el mensaje que luego recibe el usuario a la hora de hacer la petición si ocurre algún error
+ */
 public class ApiError {
 	
 	private HttpStatus status;

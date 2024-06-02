@@ -11,6 +11,9 @@ import java.awt.print.Book;
 
 @Component
 @RequiredArgsConstructor
+/**
+ * Clase que mapea las diferentes entidades a entidades DTO y viceversa
+ */
 public class Mapper {
 
     private final ModelMapper modelMapper;

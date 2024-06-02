@@ -26,6 +26,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private JwtService jwtService;
     @Autowired
     private UserDetailsService userDetailsService;
+
+    /**
+     * Comprueba que el usuario es logeado mediante el token
+     *
+     * @param request Peticion
+     * @param response Respuesta
+     * @param filterChain Cadena de filtros
+     * @throws ServletException Excepcion
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         final String token = getTokenFromRequest(request);
@@ -53,6 +62,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    /**
+     * Obtiene token por peticion
+     * @param request Peticion
+     * @return Cadena con token
+     */
     private String getTokenFromRequest(HttpServletRequest request){
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
