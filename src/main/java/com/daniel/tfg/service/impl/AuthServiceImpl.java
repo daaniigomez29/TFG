@@ -62,23 +62,28 @@ public class AuthServiceImpl implements AuthService {
      */
     public UserModelDto register(RegisterRequest request){
         boolean userExist;
+        boolean usernameExist;
 
         userExist = userRepository.findByEmail(request.getEmail()).isPresent();
+        usernameExist = userRepository.findByNameuser(request.getNameuser()).isPresent();
+        if(!usernameExist) {
+            if (!userExist) {
+                UserModel user = UserModel.builder()
+                        .email(request.getEmail())
+                        .nameuser(request.getNameuser())
+                        .password(passwordEncoder.encode(request.getPassword()))
+                        .name(request.getName())
+                        .image(request.getImage())
+                        .admin(request.isAdmin())
+                        .build();
 
-        if(!userExist) {
-            UserModel user = UserModel.builder()
-                    .email(request.getEmail())
-                    .nameuser(request.getNameuser())
-                    .password(passwordEncoder.encode(request.getPassword()))
-                    .name(request.getName())
-                    .image(request.getImage())
-                    .admin(request.isAdmin())
-                    .build();
-
-            userRepository.save(user);
-            return modelMapper.toUserDTO(user);
+                userRepository.save(user);
+                return modelMapper.toUserDTO(user);
+            } else {
+                throw new GlobalException("ya existe un usuario con ese correo");
+            }
         } else{
-            throw new GlobalException("El usuario ya existe");
+            throw new GlobalException("ya existe un usuario con ese nombre");
         }
     }
 }
