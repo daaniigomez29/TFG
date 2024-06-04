@@ -11,4 +11,6 @@ public interface UserController {
     public UserModelDto getUserById(Integer id);
     public UserModelDto editUser(UserModelDto userModelDto);
     public boolean deleteUserById(Integer id);
+    public boolean existsByEmailIgnoreCase(String email);
+    public boolean existsByNameuserIgnoreCase(String nameuser);
 }

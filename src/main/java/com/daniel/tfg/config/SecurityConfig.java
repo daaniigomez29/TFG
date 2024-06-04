@@ -31,9 +31,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authRequest ->
                         authRequest
                                 .requestMatchers("/api/v1/auth/**").permitAll()
+                                .requestMatchers("/api/v1/users/existsEmail/**").permitAll()
+                                .requestMatchers("/api/v1/users/existsNameuser/**").permitAll()
                                 .requestMatchers("/api/v1/**").authenticated()
                                 .requestMatchers("/chat-socket/**").permitAll()
                                 .requestMatchers("/app/**").permitAll()
+                                .requestMatchers("/chat/**").permitAll()
+                                .requestMatchers("topic/**").permitAll()
                                 )
                 .sessionManagement(sessionManager ->
                         sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -63,4 +63,16 @@ public class UserControllerImpl implements UserController {
     public boolean deleteUserById(@PathVariable Integer id) {
         return userService.deleteUserById(id);
     }
+
+    @Override
+    @GetMapping("users/existsEmail/{email}")
+    public boolean existsByEmailIgnoreCase(@PathVariable String email) {
+        return userService.existsByEmailIgnoreCase(email);
+    }
+
+    @Override
+    @GetMapping("users/existsNameuser/{nameuser}")
+    public boolean existsByNameuserIgnoreCase(@PathVariable String nameuser) {
+        return userService.existsByNameuserIgnoreCase(nameuser);
+    }
 }

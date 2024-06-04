@@ -78,4 +78,14 @@ public class UserServiceImpl implements UserService {
             return false;
         }
     }
+
+    @Override
+    public boolean existsByEmailIgnoreCase(String email) {
+        return userRepository.existsByEmailIgnoreCase(email);
+    }
+
+    @Override
+    public boolean existsByNameuserIgnoreCase(String nameuser) {
+        return userRepository.existsByNameuserIgnoreCase(nameuser);
+    }
 }
