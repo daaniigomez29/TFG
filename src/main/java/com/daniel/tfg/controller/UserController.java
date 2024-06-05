@@ -14,4 +14,5 @@ public interface UserController {
     public boolean deleteUserById(Integer id);
     public boolean existsByEmailIgnoreCase(String email);
     public boolean existsByNameuserIgnoreCase(Integer idUser, String nameuser);
+    public boolean existsByNameuserIgnoreCaseRegister(String nameuser);
 }

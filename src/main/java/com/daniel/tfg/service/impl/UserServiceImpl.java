@@ -120,4 +120,9 @@ public class UserServiceImpl implements UserService {
             return false;
         }
     }
+
+    @Override
+    public boolean existsByNameuserIgnoreCaseRegister(String nameuser) {
+        return userRepository.existsByNameuserIgnoreCase(nameuser);
+    }
 }

@@ -32,6 +32,7 @@ public class SecurityConfig {
                         authRequest
                                 .requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers("/api/v1/users/existsEmail/**").permitAll()
+                                .requestMatchers("/api/v1/users/existsNameuserRegister/**").permitAll()
                                 .requestMatchers("/api/v1/users/existsNameuser/**").permitAll()
                                 .requestMatchers("/api/v1/**").authenticated()
                                 .requestMatchers("/chat-socket/**").permitAll()
