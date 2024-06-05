@@ -71,8 +71,8 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    @GetMapping("users/existsNameuser/{nameuser}")
-    public boolean existsByNameuserIgnoreCase(@PathVariable String nameuser) {
-        return userService.existsByNameuserIgnoreCase(nameuser);
+    @GetMapping("users/existsNameuser/{idUser}/{nameuser}")
+    public boolean existsByNameuserIgnoreCase(@PathVariable Integer idUser, @PathVariable String nameuser) {
+        return userService.existsByNameuserIgnoreCase(idUser, nameuser);
     }
 }

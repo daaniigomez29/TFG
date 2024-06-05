@@ -60,7 +60,11 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public UserModelDto editUser(UserModelDto userModelDto) {
-        return modelMapper.toUserDTO(userRepository.save(modelMapper.toUser(userModelDto)));
+        UserModel userEdit = userRepository.findById(userModelDto.getId()).orElseThrow(() -> new GlobalException("El usuario no existe"));
+        userEdit.setNameuser(userModelDto.getNameuser());
+        userEdit.setName(userModelDto.getName());
+        userEdit.setImage(userModelDto.getImage());
+        return modelMapper.toUserDTO(userRepository.save(userEdit));
     }
 
     /**
@@ -85,7 +89,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean existsByNameuserIgnoreCase(String nameuser) {
-        return userRepository.existsByNameuserIgnoreCase(nameuser);
+    public boolean existsByNameuserIgnoreCase(Integer idUser, String nameuser) {
+        UserModel userModel = userRepository.findById(idUser).orElseThrow(() -> new GlobalException("El usuario no existe"));
+
+        if(!userModel.getNameuser().equals(nameuser)){
+            return userRepository.existsByNameuserIgnoreCase(nameuser);
+        } else{
+            return false;
+        }
     }
 }
