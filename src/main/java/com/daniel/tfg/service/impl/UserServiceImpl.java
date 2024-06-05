@@ -1,5 +1,7 @@
 package com.daniel.tfg.service.impl;
 
+import com.daniel.tfg.auth.AuthResponse;
+import com.daniel.tfg.auth.JwtService;
 import com.daniel.tfg.exception.GlobalException;
 import com.daniel.tfg.model.UserModel;
 import com.daniel.tfg.model.dto.UserModelDto;
@@ -8,9 +10,12 @@ import com.daniel.tfg.repository.UserRepository;
 import com.daniel.tfg.service.UserService;
 import com.daniel.tfg.util.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -21,6 +26,9 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository; //Repositorio de la bbdd de usuarios
     @Autowired
     private Mapper modelMapper;
+
+    @Autowired
+    private JwtService jwtService;
 
     /**
      * Obtiene todos los usuarios de la bbdd
@@ -59,12 +67,26 @@ public class UserServiceImpl implements UserService {
      * @return Usuario actualizado mapeado a UserModelDto
      */
     @Override
-    public UserModelDto editUser(UserModelDto userModelDto) {
+    public AuthResponse editUser(UserModelDto userModelDto) {
         UserModel userEdit = userRepository.findById(userModelDto.getId()).orElseThrow(() -> new GlobalException("El usuario no existe"));
         userEdit.setNameuser(userModelDto.getNameuser());
         userEdit.setName(userModelDto.getName());
-        userEdit.setImage(userModelDto.getImage());
-        return modelMapper.toUserDTO(userRepository.save(userEdit));
+        if(userModelDto.getImage() != null && !userModelDto.getImage().isEmpty()){
+            userEdit.setImage(userModelDto.getImage());
+        }
+
+        Map<String, Object> extraClaims = new HashMap<>(); //Declara toda la información que quiere que tenga el token además del correo
+        extraClaims.put("idUser", userEdit.getId());
+        extraClaims.put("nameuser", userEdit.getNameuser());
+        extraClaims.put("name", userEdit.getName());
+        extraClaims.put("admin", userEdit.isAdmin());
+        extraClaims.put("image", userEdit.getImage());
+
+        String token = jwtService.getTokenFromService(extraClaims, userEdit);
+        userRepository.save(userEdit);
+        return AuthResponse.builder()
+                .token(token)
+                .build();
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.daniel.tfg.controller.impl;
 
+import com.daniel.tfg.auth.AuthResponse;
 import com.daniel.tfg.controller.UserController;
 import com.daniel.tfg.model.dto.UserModelDto;
 import com.daniel.tfg.model.dto.UserModelDtoFriends;
@@ -51,7 +52,7 @@ public class UserControllerImpl implements UserController {
      */
     @Override
     @PutMapping("/users/{id}")
-    public UserModelDto editUser(@RequestBody UserModelDto userModelDto) {
+    public AuthResponse editUser(@RequestBody UserModelDto userModelDto) {
         return userService.editUser(userModelDto);
     }
 
