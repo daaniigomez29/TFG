@@ -1,0 +1,21 @@
+INSERT INTO user_books
+("admin", email, image, "name", nameuser, "password")
+VALUES(false, 'ruben@gmail.com', '', 'Rubén', 'rubenespada', '$2a$10$e4XaGcHDoRV2o9d9HphUqeUzrTJftqNYDtrMW7nHT1cnaR/LbudQO');
+INSERT INTO user_books
+("admin", email, image, "name", nameuser, "password")
+VALUES(false, 'kevin@gmail.com', '', 'Kevin', 'kevinaguilar', '$2a$10$e4XaGcHDoRV2o9d9HphUqeUzrTJftqNYDtrMW7nHT1cnaR/LbudQO');
+INSERT INTO user_books
+("admin", email, image, "name", nameuser, "password")
+VALUES(false, 'fran@gmail.com', '', 'Fran', 'fransantana', '$2a$10$e4XaGcHDoRV2o9d9HphUqeUzrTJftqNYDtrMW7nHT1cnaR/LbudQO');
+INSERT INTO user_books
+("admin", email, image, "name", nameuser, "password")
+VALUES(false, 'olalla@gmail.com', '', 'Olalla', 'olallalopez', '$2a$10$e4XaGcHDoRV2o9d9HphUqeUzrTJftqNYDtrMW7nHT1cnaR/LbudQO');
+INSERT INTO user_books
+("admin", email, image, "name", nameuser, "password")
+VALUES(false, 'pablo@gmail.com', '', 'Pablo', 'pablorodriguez', '$2a$10$e4XaGcHDoRV2o9d9HphUqeUzrTJftqNYDtrMW7nHT1cnaR/LbudQO');
+INSERT INTO user_books
+("admin", email, image, "name", nameuser, "password")
+VALUES(false, 'sergio@gmail.com', '', 'Sergio', 'sergioruiz', '$2a$10$e4XaGcHDoRV2o9d9HphUqeUzrTJftqNYDtrMW7nHT1cnaR/LbudQO');
+INSERT INTO user_books
+("admin", email, image, "name", nameuser, "password")
+VALUES(false, 'ibai@gmail.com', '', 'Ibai', 'ibaiperez', '$2a$10$e4XaGcHDoRV2o9d9HphUqeUzrTJftqNYDtrMW7nHT1cnaR/LbudQO');
