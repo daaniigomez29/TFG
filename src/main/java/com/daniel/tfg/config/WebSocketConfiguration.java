@@ -22,7 +22,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/chat-socket")
-                .setAllowedOrigins("http://localhost:4200")
+                .setAllowedOrigins("https://bookmate-74978.web.app")
                 .withSockJS();
     }
 }
